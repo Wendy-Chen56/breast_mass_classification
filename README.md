@@ -22,6 +22,8 @@ Seven classification thresholds were also tested to understand how they affect p
 
 **This project is for educational purposes only and is not intended for medical diagnosis.**
 
+---
+
 ## Dataset
 
 The Wisconsin Diagnostic Breast Cancer dataset is available through scikit-learn.
@@ -37,6 +39,8 @@ The Wisconsin Diagnostic Breast Cancer dataset is available through scikit-learn
 The dataset contains measurements of cell nuclei from breast mass samples.
 
 It is loaded directly from scikit-learn, so no separate CSV download is needed.
+
+---
 
 ## Methods
 
@@ -72,14 +76,17 @@ The NumPy model used the following settings:
 | Training method | Full-batch gradient descent |
 | Loss function | Binary cross-entropy |
 | Regularization | None |
+| Class weights | None |
 
 The scikit-learn model was trained on the same standardized training data without regularization.
+
+---
 
 ## Results
 
 ### Training Results
 
-The NumPy model successfully reduced training loss during gradient descent.
+The NumPy model reduced training loss during gradient descent.
 
 | Metric | Value |
 |---|---:|
@@ -106,7 +113,15 @@ This shows that the NumPy implementation produced results very close to the scik
 
 ### Threshold Selection
 
-Seven thresholds were tested on the validation data: 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, and 0.80.
+Seven thresholds were tested on the validation data:
+
+- 0.20
+- 0.30
+- 0.40
+- 0.50
+- 0.60
+- 0.70
+- 0.80
 
 The threshold of **0.60** was selected because it had the highest validation F1 score of **0.831169**.
 
@@ -120,10 +135,13 @@ However, the default threshold of 0.50 performed better on the test data.
 | F1 Score | 0.805195 | 0.767123 |
 | False Positives | 4 | 3 |
 | False Negatives | 11 | 14 |
+| Log Loss | 0.255657 | 0.255657 |
 
 Increasing the threshold reduced false positives but increased false negatives.
 
 The selected threshold was kept at 0.60 because it had been chosen using validation data before evaluating the test results.
+
+Changing the threshold did not change the predicted probabilities or log loss.
 
 ### Baseline Comparison
 
@@ -132,6 +150,8 @@ The DummyClassifier predicted all test samples as benign.
 Its accuracy was 0.631579, but its recall for malignant samples was 0.
 
 This demonstrates why accuracy alone is not enough to evaluate a classification model.
+
+---
 
 ## Limitations
 
@@ -143,10 +163,12 @@ False negatives are especially important because they represent malignant sample
 
 The model is not suitable for real medical diagnosis or clinical decision-making.
 
+---
+
 ## Project Structure
 
 ```text
-breast-mass-classification/
+breast_mass_classification/
 ├── README.md
 ├── memo.md
 ├── logistic_regression_analysis.py
@@ -161,7 +183,9 @@ breast-mass-classification/
 
 `logistic_regression_analysis.py` is the main program.
 
-`logistic_regression_explorer.py` is a separate interactive learning tool provided for exploring logistic regression. It is not used to train the main classification model.
+`logistic_regression_explorer.py` is a separate interactive learning tool for exploring logistic regression. It is not used to train the main classification model.
+
+---
 
 ## Report and Output Files
 
@@ -175,6 +199,8 @@ The program generates three required output files:
 | `reports/assignment_results.csv` | Ten validation and test model evaluations |
 | `reports/training_loss.png` | Training loss graph over 20,000 epochs |
 
+---
+
 ## How to Run This Project
 
 The following instructions explain how to run the project on Windows and macOS.
@@ -185,10 +211,10 @@ No separate dataset download or VS Code installation is required.
 
 Install the following software:
 
-- [Python](https://www.python.org/downloads/) — Python 3.10 or newer, with a version compatible with the listed dependencies.
+- [Python](https://www.python.org/downloads/) — Use Python 3.13 for the closest match to the tested environment.
 - [Git](https://git-scm.com/downloads) — Used to download the project from GitHub.
 
-**Windows users:**
+#### Windows Users
 
 Open PowerShell from the Start menu.
 
@@ -199,11 +225,15 @@ python --version
 git --version
 ```
 
-If `python` is not recognized, try `py --version`.
+If `python` is not recognized, try:
 
-**macOS users:**
+```powershell
+py --version
+```
 
-Open Terminal from Applications → Utilities → Terminal.
+#### macOS Users
+
+Open Terminal from Applications > Utilities > Terminal.
 
 Check the installations:
 
@@ -221,15 +251,13 @@ Open PowerShell or Terminal.
 Run:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/Wendy-Chen56/breast_mass_classification.git
 ```
-
-Replace `YOUR_REPOSITORY_URL` with the actual GitHub repository URL.
 
 Enter the project folder:
 
 ```bash
-cd breast-mass-classification
+cd breast_mass_classification
 ```
 
 All remaining commands should be run from this folder.
@@ -248,13 +276,13 @@ Activate the environment:
 .\venv\Scripts\Activate.ps1
 ```
 
-If PowerShell blocks activation, run:
+If PowerShell blocks activation, temporarily allow scripts in the current session:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 
-Then try activating the environment again.
+Then run the activation command again.
 
 This setting applies only to the current PowerShell session.
 
@@ -326,6 +354,25 @@ reports/
 └── training_loss.png
 ```
 
+Expected dataset counts:
+
+| Dataset | Benign (0) | Malignant (1) | Total |
+|---|---:|---:|---:|
+| Training | 214 | 127 | 341 |
+| Validation | 71 | 43 | 114 |
+| Test | 72 | 42 | 114 |
+
+Expected model results include:
+
+- Initial training loss: approximately 0.693147
+- Final training loss: approximately 0.246834
+- Selected validation threshold: 0.60
+- Best validation F1: approximately 0.831169
+- Test F1 at threshold 0.50: approximately 0.805195
+- Test F1 at threshold 0.60: approximately 0.767123
+
+The threshold results CSV should contain 7 rows, and the final evaluation CSV should contain 10 rows.
+
 CSV files can be opened using Excel or another spreadsheet application. The PNG file can be opened using an image viewer.
 
 Small numerical differences may occur with different compatible library versions.
@@ -334,7 +381,19 @@ Small numerical differences may occur with different compatible library versions
 
 **Python command not recognized**
 
-Confirm that Python is installed. On Windows, try `py --version`. On macOS, try `python3 --version`.
+Confirm that Python is installed.
+
+On Windows, try:
+
+```powershell
+py --version
+```
+
+On macOS, try:
+
+```bash
+python3 --version
+```
 
 **ModuleNotFoundError**
 
@@ -346,7 +405,7 @@ python -m pip install -r requirements.txt
 
 **requirements.txt not found**
 
-Check that the terminal is inside the `breast-mass-classification` folder.
+Check that the terminal is inside the `breast_mass_classification` folder.
 
 **PowerShell activation blocked**
 
@@ -362,29 +421,36 @@ Make sure the program runs completely without errors and check the `reports` fol
 
 **Dependency installation fails**
 
-Check the Python version and confirm that it is compatible with the versions listed in `requirements.txt`.
+Check that the Python version is compatible with the package versions in `requirements.txt`. Python 3.13.9 was used in the original development environment.
+
+---
 
 ## Tested Environment
 
-The project was developed and executed with:
+The project was developed and executed on Windows with the following versions:
 
 | Software | Version |
 |---|---|
 | Operating system | Windows |
 | Python | 3.13.9 |
+| Git | 2.55.0.windows.5 |
 | NumPy | 2.5.4 |
 | Pandas | 3.1.0 |
 | Scikit-learn | 1.9.1 |
 | Matplotlib | 3.11.2 |
 
-**Approximate runtime:** To be recorded after timing a complete run.
+**Approximate runtime:** Not yet measured.
 
 The macOS instructions are included for reproducibility. Independent testing on macOS has not yet been confirmed.
+
+---
 
 ## References
 
 - [Scikit-learn: Breast Cancer Dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html)
 - Street, W. N., Wolberg, W. H., & Mangasarian, O. L. (1993). Nuclear feature extraction for breast tumor diagnosis.
+
+---
 
 ## Educational Use
 
