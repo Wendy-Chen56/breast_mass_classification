@@ -172,7 +172,6 @@ breast_mass_classification/
 ├── README.md
 ├── memo.md
 ├── logistic_regression_analysis.py
-├── logistic_regression_explorer.py
 ├── requirements.txt
 ├── .gitignore
 └── reports/
@@ -183,7 +182,6 @@ breast_mass_classification/
 
 `logistic_regression_analysis.py` is the main program.
 
-`logistic_regression_explorer.py` is a separate interactive learning tool for exploring logistic regression. It is not used to train the main classification model.
 
 ---
 
