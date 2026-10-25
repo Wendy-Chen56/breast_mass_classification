@@ -439,7 +439,7 @@ The project was developed and executed on Windows with the following versions:
 | Scikit-learn | 1.9.1 |
 | Matplotlib | 3.11.2 |
 
-**Approximate runtime:** Not yet measured.
+**Approximate runtime:** 24 seconds on Windows using Python 3.13.9.
 
 The macOS instructions are included for reproducibility. Independent testing on macOS has not yet been confirmed.
 
